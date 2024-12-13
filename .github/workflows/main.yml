@@ -37,9 +37,27 @@ jobs:
 #          php artisan view:cache
       - name: Set permissions
         run: |
-          chmod -R 775 storage bootstrap/cache
-          mkdir -p storage/logs
+          # Check if 'storage' directory exists, then set permissions
+          if [ -d "storage" ]; then
+            chmod -R 775 storage
+          else
+            echo "Storage directory does not exist."
+          fi
+
+          # Check if 'bootstrap/cache' directory exists, then set permissions
+          if [ -d "bootstrap/cache" ]; then
+            chmod -R 775 bootstrap/cache
+          else
+            echo "Bootstrap cache directory does not exist."
+          fi
+
+          # Ensure 'storage/logs' exists, create if necessary, then set permissions
+          if [ ! -d "storage/logs" ]; then
+            mkdir -p storage/logs
+            echo "Created storage/logs directory."
+          fi
           chmod -R 775 storage/logs
+      
       - name: Exclude files
         run: |
           echo "node_modules/" >> .gitignore
