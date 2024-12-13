@@ -1,0 +1,45 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v3
+        with:
+          php-version: '8.2' # Use your Laravel project's PHP version
+          extensions: mbstring, pdo, zip, bcmath
+          tools: composer
+
+      # 3. Install dependencies
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # 4. Prepare the application
+      - name: Prepare Laravel application
+        run: |
+          cp .env.example .env
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+      # 5. Deploy using FTP
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ftp.miglobalconsultancy.co.uk
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./ # Your Laravel project directory
+          server-dir: /path/to/server/public_html/ # Your server's public directory
