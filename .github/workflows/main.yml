@@ -22,20 +22,16 @@ jobs:
         run: |
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
-#      - name: Migrate Database
-#        env:
-#          DB_CONNECTION: mysql
-#          DB_HOST: ${{ secrets.DB_HOST }}
-#          DB_PORT: ${{ secrets.DB_PORT }}
-#          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-#          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-#          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-#        run: php artisan migrate --force
       - name: Prepare Laravel application
         run: |
-         php artisan config:cache
-         php artisan route:cache
-         php artisan view:cache
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+      - name: Set permissions
+        run: |
+          chmod -R 775 storage bootstrap/cache
+          mkdir -p storage/logs
+          chmod -R 775 storage/logs
       - name: Exclude files
         run: |
           echo "node_modules/" >> .gitignore
@@ -53,6 +49,7 @@ jobs:
           exclude: |
             .git*
             node_modules
+            storage/framework/cache
+            storage/framework/sessions
             storage/logs
             vendor
-
