@@ -21,7 +21,7 @@ jobs:
       - name: Set up .env
         run: |
           php -r "file_exists('.env') || copy('.env.example', '.env');"
-          php artisan key:generate
+#          php artisan key:generate
       - name: Set up .env (if needed)
         run: |
           echo "DB_CONNECTION=mysql" >> .env
