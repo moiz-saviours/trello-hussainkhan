@@ -49,5 +49,4 @@ jobs:
           exclude: |
             .git*
             node_modules
-            storage/logs
             vendor
