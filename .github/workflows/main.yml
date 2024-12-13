@@ -12,7 +12,7 @@ jobs:
     steps:
       # 1. Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. Set up PHP
       - name: Set up PHP
@@ -36,10 +36,10 @@ jobs:
 
       # 5. Deploy using FTP
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./ # Your Laravel project directory
-          server-dir: /path/to/server/public_html/ # Your server's public directory
+          server-dir: / # Your server's public directory
