@@ -16,6 +16,8 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, pdo, zip, bcmath
           tools: composer
+      - name: Set working directory
+        run: cd /path/to/your/laravel/project  # Set the correct directory where artisan exists
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
       - name: Set up .env
@@ -49,7 +51,5 @@ jobs:
           exclude: |
             .git*
             node_modules
-            storage/framework/cache
-            storage/framework/sessions
             storage/logs
             vendor
