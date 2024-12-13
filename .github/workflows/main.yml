@@ -23,24 +23,24 @@ jobs:
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
 
-          - name: Test MySQL Connection
-            run: |
-              mysql -h ${{ secrets.DB_HOST }} -P ${{ secrets.DB_PORT }} -u${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES;"
-          - name: Debug Database Configuration
-            run: |
-              echo "DB_CONNECTION=$DB_CONNECTION"
-              echo "DB_HOST=$DB_HOST"
-              echo "DB_PORT=$DB_PORT"
-              echo "DB_DATABASE=$DB_DATABASE"
-              echo "DB_USERNAME=$DB_USERNAME"
-              echo "DB_PASSWORD=$DB_PASSWORD"
-            env:
-              DB_CONNECTION: mysql
-              DB_HOST: ${{ secrets.DB_HOST }}
-              DB_PORT: ${{ secrets.DB_PORT }}
-              DB_DATABASE: ${{ secrets.DB_DATABASE }}
-              DB_USERNAME: ${{ secrets.DB_USERNAME }}
-              DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      - name: Test MySQL Connection
+        run: |
+          mysql -h ${{ secrets.DB_HOST }} -P ${{ secrets.DB_PORT }} -u${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES;"
+      - name: Debug Database Configuration
+        run: |
+          echo "DB_CONNECTION=$DB_CONNECTION"
+          echo "DB_HOST=$DB_HOST"
+          echo "DB_PORT=$DB_PORT"
+          echo "DB_DATABASE=$DB_DATABASE"
+          echo "DB_USERNAME=$DB_USERNAME"
+          echo "DB_PASSWORD=$DB_PASSWORD"
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       - name: Migrate Database
         env:
           DB_CONNECTION: mysql
