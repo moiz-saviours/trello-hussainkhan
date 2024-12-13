@@ -23,13 +23,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::get('/board_lists', [ApiBoardListController::class, 'index'])->name('board_list.index');
-    Route::get('/board_list/{board_list?}', [ApiBoardListController::class, 'edit'])->name('board_list.index');
-    Route::post('/board_list/create', [ApiBoardListController::class, 'store'])->name('board_list.store');
+    Route::get('/board_lists', [ApiBoardListController::class, 'index']);
+    Route::get('/board_list/{board_list?}', [ApiBoardListController::class, 'edit']);
+    Route::post('/board_list/create', [ApiBoardListController::class, 'store']);
     Route::post('/board_list/{id}/toggle-status', [BrandController::class, 'toggleStatus']);
 
-    Route::get('/cards/{board_list?}', [ApiCardsController::class, 'index'])->name('cards.index');
-    Route::post('/card/create', [ApiCardsController::class, 'store'])->name('cards.store');
+    Route::get('/cards/{board_list?}', [ApiCardsController::class, 'index']);
+    Route::post('/card/create', [ApiCardsController::class, 'store']);
 });
 
 Route::post('login', function () {
