@@ -18,15 +18,23 @@ jobs:
           tools: composer
 #      - name: Install Composer dependencies
 #        run: composer install --no-dev --optimize-autoloader
-#      - name: Set up .env
-#        run: |
-#          php -r "file_exists('.env') || copy('.env.example', '.env');"
-#          php artisan key:generate
-#      - name: Prepare Laravel application
-#        run: |
-#          php artisan config:cache
-#          php artisan route:cache
-#          php artisan view:cache
+      - name: Set up .env
+        run: |
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php artisan key:generate
+      - name: Set up .env (if needed)
+        run: |
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+      - name: Prepare Laravel application
+        run: |
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
       - name: Set permissions
         run: |
           chmod -R 775 storage bootstrap/cache
@@ -38,6 +46,8 @@ jobs:
           echo "storage/framework/cache/" >> .gitignore
           echo "storage/framework/sessions/" >> .gitignore
           echo "vendor/" >> .gitignore
+          echo ".env" >> .gitignore
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -50,3 +60,4 @@ jobs:
             .git*
             node_modules
             vendor
+            .env  # Exclude the .env file
