@@ -30,11 +30,11 @@ jobs:
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-      - name: Prepare Laravel application
-        run: |
-          php artisan config:cache
-          php artisan route:cache
-          php artisan view:cache
+#      - name: Prepare Laravel application
+#        run: |
+#          php artisan config:cache
+#          php artisan route:cache
+#          php artisan view:cache
       - name: Set permissions
         run: |
           chmod -R 775 storage bootstrap/cache
