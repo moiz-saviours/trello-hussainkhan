@@ -31,8 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity.logs');
 
 
-    Route::get('/board_lists', [ApiBoardListController::class, 'index'])->name('board_list.index');
-    Route::post('/board_list', [ApiBoardListController::class, 'store'])->name('board_list.store');
+    Route::get('/board_lists', [ApiBoardListController::class, 'index'])->name('board.list.index');
+    Route::post('/board_list', [ApiBoardListController::class, 'store'])->name('board.list.store');
     Route::post('/board_list/{id}/toggle-status', [BrandController::class, 'toggleStatus']);
 
     Route::get('/cards', [ApiCardsController::class, 'index'])->name('cards.index');
